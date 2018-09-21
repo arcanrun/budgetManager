@@ -2,8 +2,11 @@ from app.BudgetCFI import BudgetCFI
 
 
 class App:
-    def __init__(self, budgetManager):
+    def __init__(self, budgetManager, timeLine):
         self.budgetManager = budgetManager
+        self.histroy = None
+        self.timeLine = timeLine
+
         self.commonBudget = None
         self.funBudget = None
         self.investBudget = None
@@ -17,3 +20,6 @@ class App:
             self.budget = self.budgetManager.execute(data)[3]
         else:
             raise NotImplementedError()
+
+    def limitForToday(self, moneyType):
+        return round(moneyType.get() / self.timeLine.daysBeforePay(),2)
