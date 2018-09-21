@@ -22,4 +22,4 @@ class App:
             raise NotImplementedError()
 
     def limitForToday(self, moneyType):
-        return round(moneyType.get() / self.timeLine.daysBeforePay(),2)
+        return round((moneyType.get() / self.timeLine.daysBeforePay()),2)
