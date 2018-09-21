@@ -2,6 +2,7 @@ import unittest
 from app.BudgetCFI import BudgetCFI
 from interfaces.IMoney import IMoney
 
+
 class BudgetCFITest(unittest.TestCase):
     def setUp(self):
         self.budgetManager = BudgetCFI()
@@ -10,17 +11,18 @@ class BudgetCFITest(unittest.TestCase):
 
         data = 10000
 
-        self.budgetManager.execute(data)
+        returning_val = self.budgetManager.execute(data)
 
-        self.assertIs(self.budgetManager.execute(data), IMoney)
-
+        for v in returning_val:
+            self.assertEqual(v.__class__.__bases__[0].__name__, IMoney.__name__)
 
     def test_right_calculation(self):
 
         data = 10000
 
-        self.budgetManager.execute(data)
+        returning_val = self.budgetManager.execute(data)
+        arr = [i.state for i in returning_val]
 
-        self.assertEqual(self.budgetManager.execute(data), [5000, 3000, 2000, 10000])
+        self.assertEqual(arr, [5000, 3000, 2000, 10000])
 
 

@@ -1,7 +1,7 @@
 from interfaces.IMoney import IMoney
 
 
-class CFICommonMoney(IMoney):
+class CFIBudgetMoney(IMoney):
     def __init__(self, state):
         self.state = state
 
@@ -13,7 +13,3 @@ class CFICommonMoney(IMoney):
 
     def change(self):
         pass
-
-if __name__ == '__main__':
-
-    print(CFICommonMoney)

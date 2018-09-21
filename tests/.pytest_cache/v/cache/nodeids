@@ -1,0 +1,3 @@
+[
+  "test_budgetCFI.py::BudgetCFITest::test_if_returning_value_is_instance_of_IMoney"
+]
