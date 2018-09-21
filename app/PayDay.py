@@ -21,10 +21,10 @@ class PayDay(ITimeLine):
 
     def getDateNextPay(self):
         payDay = datetime.date(
-            datetime.date.today().year,
-            datetime.date.today().month % 12 + 1,
-            self.payDay
-        )
+                            datetime.date.today().year,
+                            datetime.date.today().month % 12 + 1,
+                            self.payDay
+                         )
 
         return payDay
 

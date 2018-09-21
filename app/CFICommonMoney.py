@@ -11,8 +11,11 @@ class CFICommonMoney(IMoney):
     def get(self):
         return self.state
 
-    def change(self):
-        pass
+    def sub(self, data):
+        self.state -= data
+
+    def add(self, data):
+        self.state += data
 
 if __name__ == '__main__':
 

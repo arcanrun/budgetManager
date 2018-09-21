@@ -11,5 +11,9 @@ class IMoney(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def change(self):
+    def sub(self, data):
+        pass
+
+    @abc.abstractmethod
+    def add(self, data):
         pass

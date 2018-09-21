@@ -7,6 +7,7 @@ class PayDayTest(unittest.TestCase):
     def setUp(self):
         self.payDay = PayDay()
         self.testPayDay = 12
+
     def test_counting_days_before_pay_day(self):
 
         self.payDay.setPayDay(self.testPayDay)

@@ -4,7 +4,7 @@ from app.BudgetCFI import BudgetCFI
 class App:
     def __init__(self, budgetManager, timeLine):
         self.budgetManager = budgetManager
-        self.histroy = None
+        self.history = None
         self.timeLine = timeLine
 
         self.commonBudget = None
@@ -23,3 +23,17 @@ class App:
 
     def limitForToday(self, moneyType):
         return round((moneyType.get() / self.timeLine.daysBeforePay()),2)
+
+    def sub(self, money, data):
+        if isinstance(money, self.budget.__class__):
+            self.execute(self.budget.get() - data)
+        else:
+            money.sub(data)
+            self.budget.sub(data)
+
+    def add(self, money, data):
+        if isinstance(money, self.budget.__class__):
+            self.execute(self.budget.get() + data)
+        else:
+            money.add(data)
+            self.budget.add(data)
