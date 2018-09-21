@@ -5,8 +5,8 @@ class CFIBudgetMoney(IMoney):
     def __init__(self, state):
         self.state = state
 
-    def set(self):
-        pass
+    def set(self, state):
+        self.state = state
 
     def get(self):
         return self.state
@@ -16,3 +16,4 @@ class CFIBudgetMoney(IMoney):
 
     def add(self, data):
         self.state += data
+

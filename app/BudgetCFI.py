@@ -16,16 +16,16 @@ class BudgetCFI(IBudgetManager):
         )
 
     def createCommonMoney(self, data):
-        return CFICommonMoney(data*0.5)
+        return CFICommonMoney(round(data*0.5, 2))
 
     def createFunMoney(self, data):
-        return CFIFunMoney(data*0.3)
+        return CFIFunMoney(round(data*0.3, 2))
 
     def createInvestMoney(self, data):
-        return CFIInvestMoney(data*0.2)
+        return CFIInvestMoney(round(data*0.2, 2))
 
     def creatBudgetMoney(self, data):
-        return CFIBudgetMoney(data)
+        return CFIBudgetMoney(round(data, 2))
 
 
 if __name__ == '__main__':

@@ -6,6 +6,7 @@ from app.PayDay import PayDay
 class PayDayTest(unittest.TestCase):
     def setUp(self):
         self.payDay = PayDay()
+        self.payDay.now = datetime.date(2018, 9, 21)
         self.testPayDay = 12
 
     def test_counting_days_before_pay_day(self):

@@ -17,3 +17,7 @@ class IMoney(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def add(self, data):
         pass
+
+    # @abc.abstractmethod
+    # def change(self):
+    #     pass

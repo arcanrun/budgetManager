@@ -1,6 +1,6 @@
 import unittest
 import datetime
-from app.App import App
+from app.AppLogic import AppLogic
 from app.BudgetCFI import BudgetCFI
 from app.PayDay import PayDay
 
@@ -11,7 +11,7 @@ class AppTest(unittest.TestCase):
         self.payday.now = datetime.date(2018, 9, 21)
         self.payday.setPayDay(10)
 
-        self.app = App(BudgetCFI(), self.payday)
+        self.app = AppLogic(BudgetCFI(), self.payday)
         self.app.execute(10000)
 
     def test_limit_of_money_for_current_day(self):
@@ -56,4 +56,33 @@ class AppTest(unittest.TestCase):
         self.app.sub(self.app.budget, 5000)
         self.assertEqual(self.app.funBudget.get(), 1500)
 
+        # test on float values
+        # ...
 
+
+    def test_on_change_money(self):
+
+        new_value = 13334
+        # change budget
+        self.app.change(self.app.budget, new_value)
+
+        self.assertEqual(self.app.budget.get(), new_value)
+        self.assertEqual(self.app.commonBudget.get(), 6667)
+        self.assertEqual(self.app.funBudget.get(), 4000.2)
+        self.assertEqual(self.app.investBudget.get(), 2666.8)
+
+        # change common money
+        self.app.change(self.app.commonBudget, 7353)
+
+        self.assertEqual(self.app.commonBudget.get(), 7353)
+        self.assertEqual(self.app.funBudget.get(), 4000.2)
+        self.assertEqual(self.app.investBudget.get(), 2666.8)
+        self.assertEqual(self.app.budget.get(), 14020)
+
+        # change fun money
+        self.app.change(self.app.funBudget, 153)
+
+        self.assertEqual(self.app.funBudget.get(), 153)
+        self.assertEqual(self.app.commonBudget.get(), 7353)
+        self.assertEqual(self.app.investBudget.get(), 2666.8)
+        self.assertEqual(self.app.budget.get(), 10172.8)

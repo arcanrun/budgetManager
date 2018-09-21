@@ -5,8 +5,8 @@ class CFIInvestMoney(IMoney):
     def __init__(self, state):
         self.state = state
 
-    def set(self):
-        pass
+    def set(self, state):
+        self.state = state
 
     def get(self):
         return self.state

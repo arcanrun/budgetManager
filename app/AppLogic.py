@@ -1,7 +1,10 @@
 from app.BudgetCFI import BudgetCFI
 
 
-class App:
+class AppLogic:
+    """
+    work with money and time
+    """
     def __init__(self, budgetManager, timeLine):
         self.budgetManager = budgetManager
         self.history = None
@@ -25,15 +28,27 @@ class App:
         return round((moneyType.get() / self.timeLine.daysBeforePay()),2)
 
     def sub(self, money, data):
-        if isinstance(money, self.budget.__class__):
+        if self.isInstanceOfBudgetMoney(money):
             self.execute(self.budget.get() - data)
         else:
             money.sub(data)
             self.budget.sub(data)
 
     def add(self, money, data):
-        if isinstance(money, self.budget.__class__):
+        if self.isInstanceOfBudgetMoney(money):
             self.execute(self.budget.get() + data)
         else:
             money.add(data)
             self.budget.add(data)
+
+    def change(self, money, new_data):
+        if self.isInstanceOfBudgetMoney(money):
+            self.execute(new_data)
+        else:
+            money.set(new_data)
+            self.budget.set(self.commonBudget.get() + self.funBudget.get() + self.investBudget.get())
+
+    def isInstanceOfBudgetMoney(self, moneyType):
+        if isinstance(moneyType, self.budget.__class__):
+            return True
+        return False
