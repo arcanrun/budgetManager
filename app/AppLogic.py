@@ -1,9 +1,10 @@
 from app.BudgetCFI import BudgetCFI
+from interfaces.ILogic import ILogic
 
 
-class AppLogic:
+class AppLogic(ILogic):
     """
-    work with money and time
+    work with money, history and time - somekind controller
     """
     def __init__(self, budgetManager, timeLine):
         self.budgetManager = budgetManager
