@@ -51,3 +51,14 @@ class ViewTest(unittest.TestCase):
 
         self.assertEqual(res, 15000)
 
+    def test_on_empty_budget(self):
+        self.budgetCFI_2 = BudgetCFI()
+        self.payDay_2 = PayDay()
+        self.payDay_2.now = datetime.date(2018, 9, 22)
+        self.payDay_2.setPayDay(12)
+
+        self.app_2 = AppLogic(self.budgetCFI_2, self.payDay_2)
+
+        res = self.view.getBudgetMoney()
+
+        self.assertEqual(res, None)
