@@ -13,6 +13,8 @@ class PayDay(ITimeLine):
         return self.payDay
 
     def daysBeforePay(self):
+        if self.checkOnEmptyValue(self.getPayDay()):
+            return None
         payDay = self.getDateNextPay()
 
         amountDays = payDay - self.now
@@ -20,6 +22,8 @@ class PayDay(ITimeLine):
         return amountDays.days
 
     def getDateNextPay(self):
+        if self.checkOnEmptyValue(self.getPayDay()):
+            return None
         payDay = datetime.date(
                             datetime.date.today().year,
                             datetime.date.today().month % 12 + 1,
@@ -27,4 +31,9 @@ class PayDay(ITimeLine):
                          )
 
         return payDay
+
+    def checkOnEmptyValue(self, value):
+        if value is None:
+            return True
+        return False
 

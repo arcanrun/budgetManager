@@ -21,7 +21,7 @@ class ViewTest(unittest.TestCase):
 
         res = self.view.allInfo()
 
-        self.assertEqual(datetime.date.today(),res[0]) # today day
+        self.assertEqual(datetime.date(2018,9,22),res[0]) # today day
         self.assertEqual(20, res[1]) # amount of days before payment
         self.assertEqual(datetime.date(2018,10,12), res[2]) # the date of next payment
         self.assertEqual(15000, res[3]) # whole budget
@@ -51,14 +51,47 @@ class ViewTest(unittest.TestCase):
 
         self.assertEqual(res, 15000)
 
-    def test_on_empty_budget(self):
+    def test_out_on_limit_common_money(self):
+        res = self.view.getCommonLimitToday()
+
+        self.assertEqual(375, res)
+
+    def test_out_on_limit_fun_money(self):
+        res = self.view.getFunLimitToday()
+
+        self.assertEqual(225, res)
+
+    def test_on_empty_money(self):
         self.budgetCFI_2 = BudgetCFI()
         self.payDay_2 = PayDay()
-        self.payDay_2.now = datetime.date(2018, 9, 22)
-        self.payDay_2.setPayDay(12)
-
+        # self.payDay_2.now = datetime.date(2018, 9, 22)
+        # self.payDay_2.setPayDay(12)
         self.app_2 = AppLogic(self.budgetCFI_2, self.payDay_2)
+        self.view_2 = View(self.app_2)
 
-        res = self.view.getBudgetMoney()
+        # separatly
 
-        self.assertEqual(res, None)
+        noneBudget = self.view_2.getBudgetMoney()
+        noneCommon = self.view_2.getCommonMoney()
+        noneFun = self.view_2.getFunMoney()
+        noneInvest = self.view_2.getInvestMoney()
+
+        self.assertEqual(noneBudget, None)
+        self.assertEqual(noneCommon, None)
+        self.assertEqual(noneFun, None)
+        self.assertEqual(noneInvest, None)
+
+        # all info
+
+        res = self.view_2.allInfo()
+
+        self.assertEqual(datetime.date.today(), res[0])  # today day
+        self.assertEqual(None, res[1])  # amount of days before payment
+        self.assertEqual(None, res[2])  # the date of next payment
+        self.assertEqual(None, res[3])  # whole budget
+        self.assertEqual(None, res[4])  # common money
+        self.assertEqual(None, res[5])  # fun money
+        self.assertEqual(None, res[6])  # fun money
+        self.assertEqual(None, res[7])  # common limit
+        self.assertEqual(None, res[8])  # fun limit
+

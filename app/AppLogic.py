@@ -26,6 +26,8 @@ class AppLogic(ILogic):
             raise NotImplementedError()
 
     def limitForToday(self, moneyType):
+        if moneyType is None:
+            return None
         return round((moneyType.get() / self.timeLine.daysBeforePay()),2)
 
     def sub(self, money, data):
