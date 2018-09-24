@@ -16,21 +16,21 @@ class View:
         self.app = appLogic
 
     def allInfo(self):
-
+        print('='*30)
         res = [
                 self.todayDay,
                 self.getCommonLimitToday,
                 self.getFunLimitToday,
                 self.getBudgetMoney,
                 self.getCommonMoney,
-                self.getFunLimitToday,
+                self.getFunMoney,
                 self.getInvestMoney,
                 self.getAmountDaysBeforePayment,
                 self.dateOfNextPayment
                ]
         for i in res:
             i()
-
+        print('=' * 30)
         self.menu()
 
 
@@ -66,19 +66,60 @@ class View:
         if not inspect.stack()[1][3] == 'allInfo': self.menu()
 
     def todayDay(self):
-        print('Сегодня: ')
-        print(self.app.timeLine.now)
-
-
+        print('Сегодня: {}'.format(self.app.timeLine.now))
         if not inspect.stack()[1][3] == 'allInfo': self.menu()
 
     def dateOfNextPayment(self):
         res = self.app.timeLine.getDateNextPay()
         if res is None:
             self.editor()
-        print('Следующая зарплата:')
-        print(res)
+        print('Следующая зарплата: {}'.format(res))
+
         if not inspect.stack()[1][3] == 'allInfo': self.menu()
+
+    def add(self):
+        print("""
+1. Ко всему бюджету
+2. К общим средствам
+3. К средствам на развлечение
+4. К Инвестициям    
+        """)
+        choose = {
+            '1': self.app.budget,
+            '2': self.app.commonBudget,
+            '3': self.app.funBudget,
+            '4': self.app.investBudget
+        }
+        v = input()
+        v = choose.get(v)
+        if not v:
+            self.add()
+        print('Сумма: ')
+        m = float(input())
+        self.app.add(v, m)
+        self.menu()
+
+    def sub(self):
+        print("""
+1. Из всего бюджета
+2. Из общих средств
+3. Из средств на развлечения
+4. Из Инвестиций    
+                """)
+        choose = {
+            '1': self.app.budget,
+            '2': self.app.commonBudget,
+            '3': self.app.funBudget,
+            '4': self.app.investBudget
+        }
+        v = input()
+        v = choose.get(v)
+        if not v:
+            self.sub()
+        print('Сумма: ')
+        m = float(input())
+        self.app.sub(v, m)
+        self.menu()
 
     def checkOnEmptyValue(self, value, trigger):
         if value is None:
@@ -87,25 +128,19 @@ class View:
         else:
             if trigger == 1:
                 if isinstance(value, CFIBudgetMoney):
-                    print('Весь бюджет')
+                    print('Весь бюджет: {}'.format(value.get()))
                 if isinstance(value, CFICommonMoney):
-                    print('Общий бюджет')
+                    print('Общий бюджет: {}'.format(value.get()))
                 if isinstance(value, CFIFunMoney):
-                    print('Бюджет на развлечения')
+                    print('Бюджет на развлечения: {}'.format(value.get()))
                 if isinstance(value, CFIInvestMoney):
-                    print('Инвестиции')
-                print(value.get())
+                    print('Инвестиции: {}'.format(value.get()))
 
             if trigger == 2:
                 if isinstance(value, CFICommonMoney):
-                    print('Лимит из общих средств на сегодня:')
-
-                    print(self.app.limitForToday(value))
+                    print('Лимит из общих средств на сегодня: {}'.format(self.app.limitForToday(value)))
                 if isinstance(value, CFIFunMoney):
-                    print('Лимит из бюджета на развлечения:')
-                    print(self.app.limitForToday(value))
-
-
+                    print('Лимит из бюджета на развлечения: {}'.format(self.app.limitForToday(value)))
 
     def menu(self):
 
@@ -114,7 +149,7 @@ class View:
 1. Вся информация
 2. Лимит из 50% на сегодня
 3. Лимит из 30% на сегодня
-4. Бюдзет
+4. Бюджет
 5. 50%
 6. 30%
 7. 20%
@@ -125,8 +160,8 @@ class View:
 12. История
 13. Сохранить
 14. Редактировать,
-+. Вычесть
--. Прибавить
+-. Вычесть
++. Прибавить
 15. Выход
             """
 
@@ -144,7 +179,10 @@ class View:
             '8': self.getAmountDaysBeforePayment,
             '9': self.dateOfNextPayment,
             '10': self.todayDay,
+            '11': self.editor,
             '14': self.editor,
+            '+': self.add,
+            '-': self.sub,
             '15': self.exit
 
         }.get(n, self.menu)()
@@ -163,7 +201,7 @@ class View:
         self.menu()
 
     def exit(self):
-        sys.exit('Bye! Bye!')
+        sys.exit('Bye-Bye!')
 
 
 
@@ -174,8 +212,6 @@ if __name__ == '__main__':
     budgetCFI = BudgetCFI()
     payDay = PayDay()
     app = AppLogic(budgetCFI, payDay)
-
-
     mainView = View(app)
     mainView.menu()
 
