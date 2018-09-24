@@ -4,6 +4,7 @@ from interfaces.IMoney import IMoney
 class CFICommonMoney(IMoney):
     def __init__(self, state):
         self.state = state
+        self.name = 'common'
 
     def set(self, state):
         self.state = state
@@ -16,7 +17,3 @@ class CFICommonMoney(IMoney):
 
     def add(self, data):
         self.state += data
-
-if __name__ == '__main__':
-
-    print(CFICommonMoney)

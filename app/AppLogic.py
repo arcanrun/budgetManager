@@ -6,9 +6,9 @@ class AppLogic(ILogic):
     """
     work with money, history and time - somekind controller
     """
-    def __init__(self, budgetManager, timeLine):
+    def __init__(self, budgetManager, timeLine, history):
         self.budgetManager = budgetManager
-        self.history = None
+        self.history = history
         self.timeLine = timeLine
 
         self.commonBudget = None
@@ -31,18 +31,24 @@ class AppLogic(ILogic):
         return round((moneyType.get() / self.timeLine.daysBeforePay()),2)
 
     def sub(self, money, data):
+        transName = '-'
         if self.isInstanceOfBudgetMoney(money):
             self.execute(self.budget.get() - data)
+            self.history.addToHistory(transName, data, money, self.timeLine.now)
         else:
             money.sub(data)
             self.budget.sub(data)
+            self.history.addToHistory(transName,data, money, self.timeLine.now)
 
     def add(self, money, data):
+        transName = '+'
         if self.isInstanceOfBudgetMoney(money):
             self.execute(self.budget.get() + data)
+            self.history.addToHistory(transName, data, money, self.timeLine.now)
         else:
             money.add(data)
             self.budget.add(data)
+            self.history.addToHistory(transName, data, money, self.timeLine.now)
 
     def change(self, money, new_data):
         if self.isInstanceOfBudgetMoney(money):

@@ -3,6 +3,7 @@ from interfaces.IMoney import IMoney
 
 class CFIBudgetMoney(IMoney):
     def __init__(self, state):
+        self.name = 'budget'
         self.state = state
 
     def set(self, state):

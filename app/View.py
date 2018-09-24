@@ -2,6 +2,7 @@ from app.AppLogic import AppLogic
 from app.BudgetCFI import BudgetCFI
 from app.PayDay import PayDay
 from interfaces.IMoney import IMoney
+from app.History import History
 from app.CFIBudgetMoney import CFIBudgetMoney
 from app.CFICommonMoney import CFICommonMoney
 from app.CFIFunMoney import CFIFunMoney
@@ -76,6 +77,16 @@ class View:
         print('Следующая зарплата: {}'.format(res))
 
         if not inspect.stack()[1][3] == 'allInfo': self.menu()
+
+    def printHistory(self):
+        history = self.app.history.getHistoryDict()
+
+        for k,v in history.items():
+            print(k, ':')
+            for i in v:
+                print('\t', i)
+
+        self.menu()
 
     def add(self):
         print("""
@@ -180,6 +191,7 @@ class View:
             '9': self.dateOfNextPayment,
             '10': self.todayDay,
             '11': self.editor,
+            '12': self.printHistory,
             '14': self.editor,
             '+': self.add,
             '-': self.sub,
@@ -210,8 +222,9 @@ class View:
 
 if __name__ == '__main__':
     budgetCFI = BudgetCFI()
+    history = History()
     payDay = PayDay()
-    app = AppLogic(budgetCFI, payDay)
+    app = AppLogic(budgetCFI, payDay, history)
     mainView = View(app)
     mainView.menu()
 

@@ -3,7 +3,7 @@ import abc
 
 class IMoney(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def set(self):
+    def set(self, v):
         pass
 
     @abc.abstractmethod

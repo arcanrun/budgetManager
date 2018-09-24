@@ -3,15 +3,17 @@ import datetime
 from app.AppLogic import AppLogic
 from app.BudgetCFI import BudgetCFI
 from app.PayDay import PayDay
+from app.History import History
 
 
 class AppTest(unittest.TestCase):
     def setUp(self):
         self.payday = PayDay()
+        self.history = History()
         self.payday.now = datetime.date(2018, 9, 21)
         self.payday.setPayDay(10)
 
-        self.app = AppLogic(BudgetCFI(), self.payday)
+        self.app = AppLogic(BudgetCFI(), self.payday, self.history)
         self.app.execute(10000)
 
     def test_limit_of_money_for_current_day(self):

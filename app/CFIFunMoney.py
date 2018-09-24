@@ -4,6 +4,7 @@ from interfaces.IMoney import IMoney
 class CFIFunMoney(IMoney):
     def __init__(self, state):
         self.state = state
+        self.name = 'fun'
 
     def set(self, state):
         self.state = state
