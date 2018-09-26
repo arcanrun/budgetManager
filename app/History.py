@@ -10,7 +10,7 @@ class History(IHistory):
     def addToHistory(self, transName, money, obj, date, wholeBudget):
         res = '{}{}:{}'.format(transName, obj.name, float(money))
 
-        if str(date) in self.historyDict:
+        if str(date.now) in self.historyDict:
             self.historyDict[str(date.now)].append(res)
         else:
             self.historyDict[str(date.now)] = [res]
@@ -20,6 +20,7 @@ class History(IHistory):
         return self.historyDict
 
     def save(self, date, wholeBudget):
+        print('SAVIG///')
         self.db.update(date, wholeBudget, self.historyDict)
 
 

@@ -4,12 +4,15 @@ from app.AppLogic import AppLogic
 from app.BudgetCFI import BudgetCFI
 from app.PayDay import PayDay
 from app.History import History
-
+from app.DbShelve import DbShelve
 
 class AppTest(unittest.TestCase):
     def setUp(self):
         self.payday = PayDay()
+
         self.history = History()
+        self.history.setDB(DbShelve())
+
         self.payday.now = datetime.date(2018, 9, 21)
         self.payday.setPayDay(10)
 

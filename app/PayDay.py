@@ -24,6 +24,7 @@ class PayDay(ITimeLine):
     def getDateNextPay(self):
         if self.checkOnEmptyValue(self.getPayDay()):
             return None
+        
         payDay = datetime.date(
                             datetime.date.today().year,
                             datetime.date.today().month % 12 + 1,

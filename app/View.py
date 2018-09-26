@@ -240,27 +240,17 @@ if __name__ == '__main__':
         budgetCFI = BudgetCFI()
 
         payDayDb = db['payDay']
-        print(payDayDb)
 
         wholeBudgetDb = db['wholeBudget']
-        print(wholeBudgetDb)
+
+        historyDb = db['history']
 
         app = AppLogic(budgetCFI, payDayDb, history)
         app.execute(wholeBudgetDb)
+        app.history.historyDict = historyDb
 
         mainView = View(app)
+
         mainView.menu()
 
-
-
-
-
-        budgetCFI = BudgetCFI()
-        history = History()
-        history.setDB(DbShelve())
-        payDay = PayDay()
-
-        app = AppLogic(budgetCFI, payDay, history)
-        mainView = View(app)
-        mainView.menu()
 

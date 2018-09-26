@@ -22,6 +22,7 @@ class AppLogic(ILogic):
             self.funBudget = self.budgetManager.execute(data)[1]
             self.investBudget = self.budgetManager.execute(data)[2]
             self.budget = self.budgetManager.execute(data)[3]
+
         else:
             raise NotImplementedError()
 
