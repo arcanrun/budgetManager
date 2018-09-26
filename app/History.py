@@ -14,15 +14,19 @@ class History(IHistory):
             self.historyDict[str(date.now)].append(res)
         else:
             self.historyDict[str(date.now)] = [res]
-            self.save(date, wholeBudget)
+        self.save(date, wholeBudget)
 
     def getHistoryDict(self):
         return self.historyDict
 
     def save(self, date, wholeBudget):
-        print('SAVIG///')
         self.db.update(date, wholeBudget, self.historyDict)
-
 
     def setDB(self, db):
         self.db = db
+
+    def clear(self):
+        self.historyDict = {}
+        self.db.clear()
+
+

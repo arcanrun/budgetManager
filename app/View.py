@@ -170,7 +170,7 @@ class View:
 10. Сегодняшняя дата
 11. Заполнить информацию
 12. История
-13. Сохранить
+13. Очистить историю
 14. Редактировать,
 -. Вычесть
 +. Прибавить
@@ -193,6 +193,7 @@ class View:
             '10': self.todayDay,
             '11': self.editor,
             '12': self.printHistory,
+            '13': self.clearDbHistory,
             '14': self.editor,
             '+': self.add,
             '-': self.sub,
@@ -200,6 +201,14 @@ class View:
 
         }.get(n, self.menu)()
 
+    def clearDbHistory(self):
+        print('Вы уверены, что хотите очистить историю?')
+        print('[ Y / N ]')
+        choose = input()
+        if choose == 'Y' or choose == 'y' or choose == 'д' or choose == 'Д':
+            self.app.history.clear()
+        else:
+            self.menu()
     def editor(self):
         if self.app.budget is None:
             print('Введите бюджет:')
@@ -233,7 +242,9 @@ if __name__ == '__main__':
 
         app = AppLogic(budgetCFI, payDay, history)
         mainView = View(app)
+        db.close()
         mainView.menu()
+
     else:
         history = History()
         history.setDB(DbShelve())
@@ -250,7 +261,7 @@ if __name__ == '__main__':
         app.history.historyDict = historyDb
 
         mainView = View(app)
-
+        db.close()
         mainView.menu()
 
 

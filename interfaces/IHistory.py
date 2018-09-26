@@ -13,3 +13,7 @@ class IHistory(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def setDB(self, db):
         pass
+
+    @abc.abstractmethod
+    def clear(self):
+        pass

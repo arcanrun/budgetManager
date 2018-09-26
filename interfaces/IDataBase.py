@@ -8,3 +8,7 @@ class IDataBase(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def load(self):
         pass
+
+    @abc.abstractmethod
+    def clear(self):
+        pass
