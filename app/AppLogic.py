@@ -34,21 +34,21 @@ class AppLogic(ILogic):
         transName = '-'
         if self.isInstanceOfBudgetMoney(money):
             self.execute(self.budget.get() - data)
-            self.history.addToHistory(transName, data, money, self.timeLine.now)
+            self.history.addToHistory(transName, data, money, self.timeLine, self.budget.state)
         else:
             money.sub(data)
             self.budget.sub(data)
-            self.history.addToHistory(transName,data, money, self.timeLine.now)
+            self.history.addToHistory(transName,data, money, self.timeLine, self.budget.state)
 
     def add(self, money, data):
         transName = '+'
         if self.isInstanceOfBudgetMoney(money):
             self.execute(self.budget.get() + data)
-            self.history.addToHistory(transName, data, money, self.timeLine.now)
+            self.history.addToHistory(transName, data, money, self.timeLine, self.budget.state)
         else:
             money.add(data)
             self.budget.add(data)
-            self.history.addToHistory(transName, data, money, self.timeLine.now)
+            self.history.addToHistory(transName, data, money, self.timeLine, self.budget.state)
 
     def change(self, money, new_data):
         if self.isInstanceOfBudgetMoney(money):

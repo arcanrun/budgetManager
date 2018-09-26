@@ -3,11 +3,11 @@ import abc
 
 class IHistory(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def addToHistory(self, transName, money, obj, date):
+    def addToHistory(self, transName, money, obj, date, wholeBudget):
         pass
 
     @abc.abstractmethod
-    def save(self):
+    def save(self, payDay, wholeBudget):
         pass
 
     @abc.abstractmethod

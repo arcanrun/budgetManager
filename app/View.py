@@ -1,16 +1,17 @@
 from app.AppLogic import AppLogic
 from app.BudgetCFI import BudgetCFI
 from app.PayDay import PayDay
-from interfaces.IMoney import IMoney
 from app.History import History
 from app.CFIBudgetMoney import CFIBudgetMoney
 from app.CFICommonMoney import CFICommonMoney
 from app.CFIFunMoney import CFIFunMoney
 from app.CFIInvestMoney import CFIInvestMoney
-from interfaces.ITimeLine import ITimeLine
+from app.DbShelve import DbShelve
 
 import inspect
 import sys
+import shelve
+
 
 class View:
     def __init__(self, appLogic):
@@ -220,11 +221,46 @@ class View:
 
 
 
+
 if __name__ == '__main__':
-    budgetCFI = BudgetCFI()
-    history = History()
-    payDay = PayDay()
-    app = AppLogic(budgetCFI, payDay, history)
-    mainView = View(app)
-    mainView.menu()
+    db = shelve.open('ShelveDb')
+
+    if len(db) == 0:
+        budgetCFI = BudgetCFI()
+        history = History()
+        history.setDB(DbShelve())
+        payDay = PayDay()
+
+        app = AppLogic(budgetCFI, payDay, history)
+        mainView = View(app)
+        mainView.menu()
+    else:
+        history = History()
+        history.setDB(DbShelve())
+        budgetCFI = BudgetCFI()
+
+        payDayDb = db['payDay']
+        print(payDayDb)
+
+        wholeBudgetDb = db['wholeBudget']
+        print(wholeBudgetDb)
+
+        app = AppLogic(budgetCFI, payDayDb, history)
+        app.execute(wholeBudgetDb)
+
+        mainView = View(app)
+        mainView.menu()
+
+
+
+
+
+        budgetCFI = BudgetCFI()
+        history = History()
+        history.setDB(DbShelve())
+        payDay = PayDay()
+
+        app = AppLogic(budgetCFI, payDay, history)
+        mainView = View(app)
+        mainView.menu()
 
